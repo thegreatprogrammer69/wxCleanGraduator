@@ -1,0 +1,93 @@
+set(DOMAIN_HEADERS
+    core/angle_source/AngleSourceError.h
+    core/angle_source/AngleSourceEvent.h
+    core/angle_source/AngleSourcePacket.h
+    core/calibration/analysis/CalibrationCellIssue.h
+    core/calibration/analysis/CalibrationIssueSeverity.h
+    core/calibration/calculation/CalibrationCalculatorInput.h
+    core/calibration/calculation/CalibrationCellComputation.h
+    core/calibration/common/CalibrationMode.h
+    core/calibration/common/GaugePrecision.h
+    core/calibration/common/PressurePoints.h
+    core/calibration/recording/AngleSample.h
+    core/calibration/recording/CalibrationSession.h
+    core/calibration/recording/CalibrationSessionId.h
+    core/calibration/recording/PointId.h
+    core/calibration/recording/PressureSample.h
+    core/calibration/recording/TimeSeries.h
+    core/calibration/result/CalibrationCell.h
+    core/calibration/result/CalibrationCellKey.h
+    core/calibration/result/CalibrationResult.h
+    core/calibration/strategy/CalibrationStrategyBeginContext.h
+    core/calibration/strategy/CalibrationStrategyFeedContext.h
+    core/calibration/strategy/CalibrationStrategyVerdict.h
+    core/common/Angle.h
+    core/common/AngleUnit.h
+    core/common/Pressure.h
+    core/common/PressureUnit.h
+    core/common/SourceId.h
+    core/common/Timestamp.h
+    core/motor/MotorDirection.h
+    core/motor/MotorError.h
+    core/motor/MotorEvent.h
+    core/motor/MotorFlapsState.h
+    core/motor/MotorFrequency.h
+    core/motor/MotorLimitsState.h
+    core/motor/MotorState.h
+    core/pressure_source/PressurePacket.h
+    core/pressure_source/PressureSourceError.h
+    core/pressure_source/PressureSourceEvent.h
+    core/property/PropertyField.h
+    core/property/PropertyId.h
+    core/property/PropertyValue.h
+    core/telemetry/TelemetryField.h
+    core/telemetry/TelemetryValue.h
+    core/video_overlay/VideoOverlayConfig.h
+    core/video_source/PixelFormat.h
+    core/video_source/VideoBuffer.h
+    core/video_source/VideoFrame.h
+    core/video_source/VideoFramePacket.h
+    core/video_source/VideoSourceError.h
+    core/video_source/VideoSourceEvent.h
+    ports/angle_source/IAngleSink.h
+    ports/angle_source/IAngleSource.h
+    ports/angle_source/IAngleSourceObserver.h
+    ports/calibration/calculation/ICalibrationCalculator.h
+    ports/calibration/recording/ICalibrationRecorder.h
+    ports/calibration/strategy/ICalibrationStrategy.h
+    ports/clock/IClock.h
+    ports/clock/ISessionClock.h
+    ports/drivers/motor/IMotorDriver.h
+    ports/drivers/motor/IMotorDriverObserver.h
+    ports/logging/ILogger.h
+    ports/pressure_source/IPressureSink.h
+    ports/pressure_source/IPressureSource.h
+    ports/pressure_source/IPressureSourceObserver.h
+    ports/property/IPropertyObserver.h
+    ports/property/IPropertySource.h
+    ports/settings/ISettingsStorage.h
+    ports/telemetry/ITelemetrySource.h
+    ports/video_overlay/IVideoOverlay.h
+    ports/video_source/IVideoSink.h
+    ports/video_source/IVideoSource.h
+    ports/video_source/IVideoSourceObserver.h
+)
+
+set(DOMAIN_SOURCES
+    core/calibration/recording/TimeSeries.cpp
+    core/common/PressureUnit.cpp
+    core/motor/MotorFrequency.cpp
+)
+
+add_library(domain INTERFACE)
+
+target_sources(domain
+    INTERFACE
+        ${DOMAIN_HEADERS}
+        ${DOMAIN_SOURCES}
+)
+
+target_include_directories(domain
+    INTERFACE
+        ${CMAKE_SOURCE_DIR}/src
+)
