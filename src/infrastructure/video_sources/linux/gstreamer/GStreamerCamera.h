@@ -7,11 +7,12 @@
 #include <vector>
 #include <string>
 
-#include "domain/fmt/Logger.h"
-#include "../../../../domain/ports/video/IVideoSource.h"
 #include "GStreamerCameraConfig.h"
-#include "infrastructure/video/VideoSourcePorts.h"
-#include "infrastructure/video/VideoSourceNotifier.h"
+#include "domain/ports/video_source/IVideoSource.h"
+#include "infrastructure/video_sources/VideoSourceNotifier.h"
+#include "infrastructure/video_sources/VideoSourcePorts.h"
+#include "shared/logging/FmtLogger.h"
+
 
 typedef struct _GstElement GstElement;
 typedef struct _GstBus     GstBus;

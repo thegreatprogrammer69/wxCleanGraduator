@@ -1,7 +1,7 @@
 #ifndef CLEANGRADUATOR_APPLICATION_PRESSUREUNIT_H
 #define CLEANGRADUATOR_APPLICATION_PRESSUREUNIT_H
 
-#include "domain/core/measurement/PressureUnit.h"
+#include "domain/core/common/PressureUnit.h"
 
 namespace application::models {
     struct PressureUnit {

@@ -1,0 +1,16 @@
+#ifndef UNTITLED_CONSOLELOGGER_H
+#define UNTITLED_CONSOLELOGGER_H
+#include <domain/ports/logging/ILogger.h>
+
+namespace infra::logging {
+
+class ConsoleLogger final : public domain::ports::ILogger {
+public:
+    void info(const std::string& msg) override;
+    void warn(const std::string& msg) override;
+    void error(const std::string& msg) override;
+};
+
+}
+
+#endif //UNTITLED_CONSOLELOGGER_H

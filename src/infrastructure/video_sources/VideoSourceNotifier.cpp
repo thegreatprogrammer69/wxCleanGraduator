@@ -1,10 +1,10 @@
 #include "VideoSourceNotifier.h"
-#include "domain/ports/video/IVideoSourceObserver.h"
-#include "domain/ports/video/IVideoSink.h"
+#include "domain/ports/video_source/IVideoSourceObserver.h"
+#include "domain/ports/video_source/IVideoSink.h"
 
 using namespace infra::camera::detail;
 using namespace domain::ports;
-using namespace domain::common;
+using namespace domain::video;
 
 void VideoSourceNotifier::addObserver(IVideoSourceObserver& o)
 {

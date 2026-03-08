@@ -56,7 +56,7 @@ bool application::property::PropertyRegistry::setProperty(const domain::property
 
     it->second->setProperty(value);
 
-    observers_.notify(value);
+    observers_->notify(value);
 
     return true;
 }

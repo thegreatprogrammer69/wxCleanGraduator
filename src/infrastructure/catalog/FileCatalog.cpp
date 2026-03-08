@@ -1,4 +1,4 @@
-#include "Catalog.h"
+#include "FileCatalog.h"
 
 #include <fstream>
 #include <sstream>
@@ -6,16 +6,13 @@
 #include <utility>
 
 #include "domain/core/common/PressureUnit.h"
-#include "application/models/Displacement.h"
-#include "application/models/Gauge.h"
-#include "application/models/GaugePrecision.h"
+#include "../../application/models/catalog/Displacement.h"
+#include "../../application/models/catalog/Gauge.h"
+#include "../../application/models/catalog/GaugePrecision.h"
 #include "application/models/PressureUnit.h"
 #include "application/models/Printer.h"
 
-
-// ЗАМЕНИ НА СВОИ include'ы
-
-namespace infra {
+namespace infra::catalog {
 
 namespace {
 
@@ -100,41 +97,22 @@ inline domain::common::PressureUnit parsePressureUnit(const std::string& s) {
 }
 
 template<typename T>
-void loadNotImplemented(const std::string&) {
-    static_assert(sizeof(T) == 0, "Catalog<T>::load() specialization is not implemented for this type");
+void loadNotImplemented() {
+    static_assert(sizeof(T) == 0, "FileCatalog<T>::load() specialization is not implemented for this type");
 }
 
 } // namespace
 
 template<typename T>
-Catalog<T>::Catalog(std::string filePath)
-    : filePath_(std::move(filePath)) {
+void FileCatalog<T>::load() {
+    loadNotImplemented<T>();
 }
-
-template<typename T>
-const std::vector<T>& Catalog<T>::items() const noexcept {
-    return items_;
-}
-
-template<typename T>
-std::vector<T>& Catalog<T>::items() noexcept {
-    return items_;
-}
-
-template<typename T>
-void Catalog<T>::load() {
-    loadNotImplemented<T>(filePath_);
-}
-
-} // namespace infra
 
 // ===== СПЕЦИАЛИЗАЦИИ =====
 
-namespace infra {
-
 template<>
-void Catalog<application::models::Displacement>::load() {
-    items_.clear();
+void FileCatalog<application::models::Displacement>::load() {
+    items().clear();
 
     std::ifstream in(filePath_);
     if (!in.is_open()) {
@@ -160,13 +138,13 @@ void Catalog<application::models::Displacement>::load() {
         item.id = toInt(parts[0], "id");
         item.name = parts[1];
 
-        items_.push_back(std::move(item));
+        items().push_back(std::move(item));
     }
 }
 
 template<>
-void Catalog<application::models::Gauge>::load() {
-    items_.clear();
+void FileCatalog<application::models::Gauge>::load() {
+    items().clear();
 
     std::ifstream in(filePath_);
     if (!in.is_open()) {
@@ -193,17 +171,17 @@ void Catalog<application::models::Gauge>::load() {
 
         std::vector<float> points;
         for (std::size_t i = 1; i < parts.size(); ++i) {
-            points.push_back(toDouble(parts[i], "point"));
+            points.push_back(static_cast<float>(toDouble(parts[i], "point")));
         }
 
         item.points = std::move(points);
-        items_.push_back(std::move(item));
+        items().push_back(std::move(item));
     }
 }
 
 template<>
-void Catalog<application::models::GaugePrecision>::load() {
-    items_.clear();
+void FileCatalog<application::models::GaugePrecision>::load() {
+    items().clear();
 
     std::ifstream in(filePath_);
     if (!in.is_open()) {
@@ -222,13 +200,13 @@ void Catalog<application::models::GaugePrecision>::load() {
 
         application::models::GaugePrecision item{};
         item.value = toDouble(trim(line), "value");
-        items_.push_back(std::move(item));
+        items().push_back(std::move(item));
     }
 }
 
 template<>
-void Catalog<application::models::PressureUnit>::load() {
-    items_.clear();
+void FileCatalog<application::models::PressureUnit>::load() {
+    items().clear();
 
     std::ifstream in(filePath_);
     if (!in.is_open()) {
@@ -247,13 +225,13 @@ void Catalog<application::models::PressureUnit>::load() {
 
         application::models::PressureUnit item{};
         item.unit = parsePressureUnit(trim(line));
-        items_.push_back(std::move(item));
+        items().push_back(std::move(item));
     }
 }
 
 template<>
-void Catalog<application::models::Printer>::load() {
-    items_.clear();
+void FileCatalog<application::models::Printer>::load() {
+    items().clear();
 
     std::ifstream in(filePath_);
     if (!in.is_open()) {
@@ -279,8 +257,16 @@ void Catalog<application::models::Printer>::load() {
         item.name = parts[0];
         item.path = parts[1];
 
-        items_.push_back(std::move(item));
+        items().push_back(std::move(item));
     }
 }
 
-} // namespace infra
+// ===== ЯВНЫЕ ИНСТАНЦИРОВАНИЯ =====
+
+template class FileCatalog<application::models::Printer>;
+template class FileCatalog<application::models::Displacement>;
+template class FileCatalog<application::models::Gauge>;
+template class FileCatalog<application::models::GaugePrecision>;
+template class FileCatalog<application::models::PressureUnit>;
+
+} // namespace infra::catalog

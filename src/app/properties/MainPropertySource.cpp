@@ -1,20 +1,30 @@
 #include "MainPropertySource.h"
 
-#include <application/models/Printer.h>
-
-#include "application/models/Displacement.h"
-#include "application/models/Gauge.h"
-#include "application/models/GaugePrecision.h"
-#include "application/models/PressureUnit.h"
 #include "domain/core/common/PressureUnit.h"
-#include "infrastructure/catalog/Catalog.h"
+
+using namespace domain::property;
+
+MainPropertySource::MainPropertySource(
+    application::settings::SettingsService& settings,
+    domain::ports::ICatalog<application::models::Printer>& printers,
+    domain::ports::ICatalog<application::models::Displacement>& displacements,
+    domain::ports::ICatalog<application::models::Gauge>& gauges,
+    domain::ports::ICatalog<application::models::GaugePrecision>& gaugePrecisions,
+    domain::ports::ICatalog<application::models::PressureUnit>& pressureUnits
+)
+    : PropertySourceBase(settings),
+      printers_(printers),
+      displacements_(displacements),
+      gauges_(gauges),
+      gaugePrecisions_(gaugePrecisions),
+      pressureUnits_(pressureUnits)
+{
+}
 
 template<class T, class F>
-std::vector<domain::property::EnumOption>
+std::vector<EnumOption>
 makeOptions(const std::vector<T>& items, F nameGetter)
 {
-    using namespace domain::property;
-
     std::vector<EnumOption> options;
     options.reserve(items.size());
 
@@ -26,14 +36,11 @@ makeOptions(const std::vector<T>& items, F nameGetter)
     return options;
 }
 
-
-static domain::property::EnumPropertyField makeEnumField(
+static EnumPropertyField makeEnumField(
     const std::string& id,
     const std::string& name,
-    std::vector<domain::property::EnumOption> options)
+    std::vector<EnumOption> options)
 {
-    using namespace domain::property;
-
     return EnumPropertyField{
         PropertyMeta{
             id,
@@ -46,39 +53,21 @@ static domain::property::EnumPropertyField makeEnumField(
     };
 }
 
-std::vector<domain::property::PropertyField> MainPropertySource::propertySchema() const
+std::vector<PropertyField> MainPropertySource::propertySchema() const
 {
-    using namespace domain::property;
-
-    infra::Catalog<application::models::Printer> printers("catalogs/printers.txt");
-    printers.load();
-
-    infra::Catalog<application::models::Displacement> displacements("catalogs/displacements.txt");
-    displacements.load();
-
-    infra::Catalog<application::models::Gauge> gauges("catalogs/gauges.txt");
-    gauges.load();
-
-    infra::Catalog<application::models::GaugePrecision> gaugePrecisions("catalogs/gauge_precision.txt");
-    gaugePrecisions.load();
-
-    infra::Catalog<application::models::PressureUnit> pressureUnits("catalogs/pressure_units.txt");
-    pressureUnits.load();
-
-
-    auto printerOptions = makeOptions(printers.items(),
+    auto printerOptions = makeOptions(printers_.items(),
         [](const auto& x){ return x.name; });
 
-    auto displacementOptions = makeOptions(displacements.items(),
+    auto displacementOptions = makeOptions(displacements_.items(),
         [](const auto& x){ return x.name; });
 
-    auto gaugeOptions = makeOptions(gauges.items(),
+    auto gaugeOptions = makeOptions(gauges_.items(),
         [](const auto& x){ return x.name; });
 
-    auto precisionOptions = makeOptions(gaugePrecisions.items(),
+    auto precisionOptions = makeOptions(gaugePrecisions_.items(),
         [](const auto& x){ return std::to_string(x.value); });
 
-    auto pressureUnitOptions = makeOptions(pressureUnits.items(),
+    auto pressureUnitOptions = makeOptions(pressureUnits_.items(),
         [](const auto& x){ return to_string(x.unit); });
 
     return {

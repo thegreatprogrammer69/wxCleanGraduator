@@ -8,17 +8,18 @@
 #include <gst/gst.h>
 #include <gst/app/gstappsink.h>
 
-#include "domain/core/measurement/Timestamp.h"
-#include "domain/core/video/PixelFormat.h"
-#include "domain/core/video/VideoFrame.h"
-#include "domain/core/video/VideoFramePacket.h"
-#include "domain/core/video/VideoSourceError.h"
-#include "domain/core/video/VideoSourceEvent.h"
+#include "domain/core/common/Timestamp.h"
+#include "domain/core/video_source/PixelFormat.h"
+#include "domain/core/video_source/VideoFrame.h"
+#include "domain/core/video_source/VideoFramePacket.h"
+#include "domain/core/video_source/VideoSourceError.h"
+#include "domain/core/video_source/VideoSourceEvent.h"
 #include "domain/ports/clock/IClock.h"
 
 namespace infra::camera {
 
     using namespace domain::common;
+    using namespace domain::video;
 
 namespace {
 

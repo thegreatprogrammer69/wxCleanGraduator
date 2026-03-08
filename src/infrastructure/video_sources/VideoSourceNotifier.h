@@ -7,7 +7,7 @@ namespace domain::ports {
     class IVideoSink;
 }
 
-namespace domain::common {
+namespace domain::video {
     struct VideoFramePacket;
     struct VideoSourceEvent;
 }
@@ -23,8 +23,8 @@ namespace infra::camera::detail {
         void addSink(domain::ports::IVideoSink& s);
         void removeSink(domain::ports::IVideoSink& s);
 
-        void notifyFrame(const domain::common::VideoFramePacket& frame);
-        void notifyEvent(const domain::common::VideoSourceEvent& event);
+        void notifyFrame(const domain::video::VideoFramePacket& frame);
+        void notifyEvent(const domain::video::VideoSourceEvent& event);
 
     private:
         ThreadSafeObserverList<domain::ports::IVideoSourceObserver> observers_;

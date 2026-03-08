@@ -1,13 +1,23 @@
-add_library(wxcg_ui INTERFACE)
+set(UI_SOURCES
+        wx/bindings/WxBoolBinding.cpp
+        wx/bindings/WxSliderFloatBinding.cpp
+        wx/bindings/WxTextBinding.cpp
+        wx/panels/WxPropertyGridBuilder.cpp
+        wx/video/VideoGridWidget.cpp
+)
 
-# UI layer integrates wxWidgets bindings with application services.
+find_package(wxWidgets REQUIRED COMPONENTS core base aui propgrid)
+include(${wxWidgets_USE_FILE})
+
+add_library(wxcg_ui ${UI_SOURCES})
+
 target_include_directories(wxcg_ui
-    INTERFACE
+    PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )
 
 target_link_libraries(wxcg_ui
-    INTERFACE
         wxcg_application
         wxcg_domain
+        ${wxWidgets_LIBRARIES}
 )

@@ -1,15 +1,18 @@
-add_library(wxcg_app INTERFACE)
+set(APP_SOURCES
+        properties/MainPropertySource.cpp
+)
 
-# App composition root combines application services and adapters.
+add_library(wxcg_app ${APP_SOURCES})
+
 target_include_directories(wxcg_app
-    INTERFACE
+        PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )
 
 target_link_libraries(wxcg_app
-    INTERFACE
         wxcg_application
         wxcg_domain
+        wxcg_shared
         wxcg_infrastructure
         wxcg_ui
 )

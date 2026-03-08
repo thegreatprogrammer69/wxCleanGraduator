@@ -31,6 +31,8 @@ namespace infra::camera {
         // вызывается из SampleGrabberCB
         void onFrame(double time, unsigned char* data, long size);
 
+        void setWindowHandle(void* handle);
+
     private:
         struct DShowCameraImpl;
 

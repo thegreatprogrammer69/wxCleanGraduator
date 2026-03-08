@@ -9,16 +9,11 @@
 #include <memory>
 #include <algorithm>
 
-#include "domain/fmt/Logger.h"
-#include "../../../../domain/ports/video/IVideoSource.h"
+#include "shared/logging/FmtLogger.h"
+#include "../../VideoSourceNotifier.h"
+#include "../../VideoSourcePorts.h"
 #include "V4LCameraConfig.h"
-#include "infrastructure/video/VideoSourceNotifier.h"
-#include "infrastructure/video/VideoSourcePorts.h"
-
-
-namespace domain::ports {
-    struct IVideoSourceObserver;
-}
+#include "domain/ports/video_source/IVideoSource.h"
 
 namespace infra::camera {
 
@@ -37,11 +32,13 @@ public:
     void addSink(domain::ports::IVideoSink &) override;
     void removeSink(domain::ports::IVideoSink &) override;
 
+    void setWindowHandle(void* handle);
+    void* windowHandle() const noexcept;
+
 private:
     void captureLoop();
     void dispatchFrame(const uint8_t* data, size_t size);
-
-
+    
 private:
     detail::VideoSourceNotifier notifier_;
 
@@ -52,6 +49,8 @@ private:
 
     std::atomic<bool> running_{false};
     std::thread thread_;
+
+    std::atomic<void*> windowHandle_{nullptr};
 
     struct Buffer {
         void*  start = nullptr;

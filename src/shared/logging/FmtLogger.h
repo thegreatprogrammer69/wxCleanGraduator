@@ -6,7 +6,7 @@
 
 #include "domain/ports/logging/ILogger.h"
 
-namespace fmtlog {
+namespace fmt {
 
     class Logger final {
     public:
