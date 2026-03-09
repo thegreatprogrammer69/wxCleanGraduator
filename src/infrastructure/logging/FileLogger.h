@@ -1,6 +1,8 @@
 #ifndef UNTITLED_FILELOGGER_H
 #define UNTITLED_FILELOGGER_H
 
+#include <filesystem>
+
 #include "domain/ports/logging/ILogger.h"
 #include <fstream>
 #include <mutex>
@@ -9,7 +11,7 @@ namespace infra::logging {
 
 class FileLogger final : public domain::ports::ILogger {
 public:
-    explicit FileLogger(const std::string& filePath);
+    explicit FileLogger(const std::filesystem::path& filePath);
 
     void info(const std::string& msg) override;
     void warn(const std::string& msg) override;

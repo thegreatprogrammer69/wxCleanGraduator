@@ -8,11 +8,14 @@ set(INFRASTRUCTURE_SOURCES
         logging/ConsoleLogger.cpp
         logging/NamedMultiLogger.cpp
 
+        storage/VideoAngleSourcesStorage.cpp
+        storage/LogSourcesStorage.cpp
+
         video_sources/VideoSourceNotifier.cpp
 
         video_renderer/VideoRenderer.cpp
 
-
+        factory/VideoSourceFactory.cpp
 )
 
 # Platform specific sources
@@ -32,6 +35,7 @@ elseif(UNIX)
     )
 
     # ---- GStreamer ----
+    find_package(OpenGL REQUIRED)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GSTREAMER REQUIRED
             gstreamer-1.0
@@ -43,6 +47,12 @@ endif()
 
 
 add_library(wxcg_infrastructure ${INFRASTRUCTURE_SOURCES})
+
+if(WIN32)
+    target_compile_definitions(wxcg_infrastructure PRIVATE PLATFORM_WINDOWS)
+elseif(UNIX AND NOT APPLE)
+    target_compile_definitions(wxcg_infrastructure PRIVATE PLATFORM_LINUX)
+endif()
 
 target_include_directories(wxcg_infrastructure
         PRIVATE
@@ -57,4 +67,7 @@ target_link_libraries(wxcg_infrastructure
 
         ${GSTREAMER_LIBRARIES}
         ${V4L2_LIBRARIES}
+
+        X11
+        OpenGL::GL
 )

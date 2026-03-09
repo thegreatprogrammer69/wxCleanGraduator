@@ -5,11 +5,11 @@
 #include "application/property/PropertySourceBase.h"
 #include "domain/ports/catalog/ICatalog.h"
 
-#include "../../application/models/catalog/Printer.h"
-#include "../../application/models/catalog/Displacement.h"
-#include "application/models/Gauge.h"
-#include "../../application/models/catalog/GaugePrecision.h"
-#include "../../application/models/catalog/PressureUnit.h"
+#include "application/models/catalog/Printer.h"
+#include "application/models/catalog/Displacement.h"
+#include "application/models/catalog/GaugePrecision.h"
+#include "application/models/catalog/PressureUnit.h"
+#include "application/models/catalog/Gauge.h"
 
 class MainPropertySource final : public application::property::PropertySourceBase
 {

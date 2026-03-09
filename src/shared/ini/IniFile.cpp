@@ -99,7 +99,7 @@ IniSection::values() const noexcept {
 
 // ================= IniFile =================
 
-bool IniFile::load(const std::string& path) {
+bool IniFile::load(const std::filesystem::path& path) {
     std::ifstream file(path);
     if (!file.is_open()) {
         return false;
@@ -137,7 +137,7 @@ bool IniFile::load(const std::string& path) {
     return true;
 }
 
-bool IniFile::save(const std::string& path) const {
+bool IniFile::save(const std::filesystem::path& path) const {
     std::ofstream file(path, std::ios::trunc);
     if (!file.is_open()) {
         return false;

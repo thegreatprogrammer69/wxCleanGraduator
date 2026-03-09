@@ -4,28 +4,33 @@
 #include <string>
 #include <unordered_map>
 #include <cstdint>
+#include <filesystem>
+
+#include "shared/param/IParameterStore.h"
+
 
 namespace utils::ini {
 
-    class IniSection {
+    class IniSection : public utils::config::IParameterStore {
     public:
-        bool has(const std::string& key) const noexcept;
+        bool has(const std::string& key) const noexcept override;
 
         std::string getString(const std::string& key,
-                              const std::string& defaultValue = {}) const;
+                              const std::string& defaultValue = "") const override;
 
-        bool getBool(const std::string& key, bool defaultValue = false) const;
-        int getInt(const std::string& key, int defaultValue = 0) const;
-        float getFloat(const std::string& key, float defaultValue = 0.0f) const;
+        bool getBool(const std::string& key, bool defaultValue = false) const override;
+        int getInt(const std::string& key, int defaultValue = 0) const override;
+        float getFloat(const std::string& key, float defaultValue = 0.0f) const override;
         std::uint32_t getHex(const std::string& key,
-                             std::uint32_t defaultValue = 0) const;
+                             std::uint32_t defaultValue = 0) const override;
 
-        void set(const std::string& key, const std::string& value);
-        void set(const std::string& key, bool value);
-        void set(const std::string& key, int value);
-        void set(const std::string& key, float value);
-        void setHex(const std::string& key, std::uint32_t value);
+        void set(const std::string& key, const std::string& value) override;
+        void set(const std::string& key, bool value) override;
+        void set(const std::string& key, int value) override;
+        void set(const std::string& key, float value) override;
+        void setHex(const std::string& key, std::uint32_t value) override;
 
+        // Метод, специфичный для INI (его нет в интерфейсе)
         const std::unordered_map<std::string, std::string>& values() const noexcept;
 
     private:
@@ -34,8 +39,8 @@ namespace utils::ini {
 
     class IniFile {
     public:
-        bool load(const std::string& path);
-        bool save(const std::string& path) const;
+        bool load(const std::filesystem::path& path);
+        bool save(const std::filesystem::path& path) const;
 
         const std::unordered_map<std::string, IniSection>& sections() const;
 
@@ -49,7 +54,5 @@ namespace utils::ini {
     };
 
 } // namespace utils::ini
-
-
 
 #endif //INIFILE_H

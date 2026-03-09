@@ -6,11 +6,11 @@
 #include <utility>
 
 #include "domain/core/common/PressureUnit.h"
-#include "../../application/models/catalog/Displacement.h"
-#include "../../application/models/catalog/Gauge.h"
-#include "../../application/models/catalog/GaugePrecision.h"
-#include "application/models/PressureUnit.h"
-#include "application/models/Printer.h"
+#include "application/models/catalog/Displacement.h"
+#include "application/models/catalog/Gauge.h"
+#include "application/models/catalog/GaugePrecision.h"
+#include "application/models/catalog/PressureUnit.h"
+#include "application/models/catalog/Printer.h"
 
 namespace infra::catalog {
 

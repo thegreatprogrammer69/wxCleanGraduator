@@ -14,6 +14,9 @@ add_subdirectory(src/infrastructure)
 add_subdirectory(src/ui)
 add_subdirectory(src/app)
 
+find_package(wxWidgets REQUIRED COMPONENTS core)
+include(${wxWidgets_USE_FILE})
+
 add_executable(wxCleanGraduator main.cpp)
 
 target_include_directories(wxCleanGraduator
@@ -29,4 +32,5 @@ target_link_libraries(wxCleanGraduator
         wxcg_application
         wxcg_shared
         wxcg_domain
+        ${wxWidgets_LIBRARIES}
 )

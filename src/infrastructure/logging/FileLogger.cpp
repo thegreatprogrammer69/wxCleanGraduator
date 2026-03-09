@@ -2,7 +2,7 @@
 
 namespace infra::logging {
 
-FileLogger::FileLogger(const std::string &filePath): file_(filePath, std::ios::app) {}
+FileLogger::FileLogger(const std::filesystem::path &filePath): file_(filePath, std::ios::app) {}
 
 void FileLogger::info(const std::string &msg) {
     log("INFO", msg);

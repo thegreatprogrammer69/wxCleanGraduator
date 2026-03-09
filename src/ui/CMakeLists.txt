@@ -3,7 +3,8 @@ set(UI_SOURCES
         wx/bindings/WxSliderFloatBinding.cpp
         wx/bindings/WxTextBinding.cpp
         wx/panels/WxPropertyGridBuilder.cpp
-        wx/video/VideoGridWidget.cpp
+        wx/video/WxVideoGridWidget.cpp
+        wx/main_window/WxMainWindow.cpp
 )
 
 find_package(wxWidgets REQUIRED COMPONENTS core base aui propgrid)

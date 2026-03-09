@@ -1,7 +1,7 @@
 #ifndef ISESSIONCLOCK1_H
 #define ISESSIONCLOCK1_H
 #include "IClock.h"
-#include "domain/core/measurement/Timestamp.h"
+#include "domain/core/common/Timestamp.h"
 
 namespace domain::ports {
     struct ISessionClock : IClock {

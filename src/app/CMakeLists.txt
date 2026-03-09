@@ -1,6 +1,11 @@
 set(APP_SOURCES
+        bootstrap/ApplicationBootstrap.cpp
+        bootstrap/UiBootstrap.cpp
         properties/MainPropertySource.cpp
 )
+
+find_package(wxWidgets REQUIRED COMPONENTS core base aui propgrid)
+include(${wxWidgets_USE_FILE})
 
 add_library(wxcg_app ${APP_SOURCES})
 
@@ -15,4 +20,5 @@ target_link_libraries(wxcg_app
         wxcg_shared
         wxcg_infrastructure
         wxcg_ui
+        ${wxWidgets_LIBRARIES}
 )
